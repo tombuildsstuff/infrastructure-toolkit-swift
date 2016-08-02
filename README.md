@@ -54,3 +54,9 @@ It's also possible to execute all of the Service Status Monitors - which you'd g
 ```
 TODO: implement me
 ```
+
+## Retrieving the Application Version
+```
+let service = ApplicationService()
+print("Version is \(service.version())")
+```
