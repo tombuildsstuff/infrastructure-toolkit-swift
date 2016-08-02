@@ -52,5 +52,14 @@ If you're using one of the Integrations outlined above - the `Name` field is use
 It's also possible to execute all of the Service Status Monitors - which you'd generally want to do at Deployment time.
 
 ```
-TODO: implement me
+let monitors = [ ExampleServiceStatusMonitor() ]
+let executor = ServiceStatusMonitorExecutor(monitors: monitors)
+executor.executeAll { (result) in
+  if (result.successful) {
+    print("All Monitors were Successful!")
+  } else {
+    print("One or more Monitors Failed!")
+  }
+}
+
 ```
