@@ -4,7 +4,7 @@ public class ServiceStatusMonitorExecutor {
 
     private let monitors : [ServiceStatusMonitor]
 
-    init(monitors: [ServiceStatusMonitor]) {
+    public init(monitors: [ServiceStatusMonitor]) {
         self.monitors = monitors
     }
 
