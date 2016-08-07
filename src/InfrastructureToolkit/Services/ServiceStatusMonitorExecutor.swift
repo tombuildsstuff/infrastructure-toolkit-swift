@@ -1,14 +1,14 @@
 import Foundation
 
-class ServiceStatusMonitorExecutor {
+public class ServiceStatusMonitorExecutor {
 
-    let monitors : [ServiceStatusMonitor]
+    private let monitors : [ServiceStatusMonitor]
 
     init(monitors: [ServiceStatusMonitor]) {
         self.monitors = monitors
     }
 
-    func execute(name: String, done: (ServiceStatusResult) -> ()) {
+    public func execute(name: String, done: (ServiceStatusResult) -> ()) {
         guard let monitor = self.findMonitorWithName(name: name) else {
             let metaData = ServiceStatusResultMetaData(summary: "Could not locate monitor", properties: nil)
             let result = ServiceStatusResult(name: name, successful: false, metaData: metaData)

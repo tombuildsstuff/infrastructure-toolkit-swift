@@ -1,10 +1,10 @@
 import Foundation
 
 @objc
-class ServiceStatusResult : NSObject {
-    let name : String
-    let successful : Bool
-    let metaData : ServiceStatusResultMetaData?
+public class ServiceStatusResult : NSObject {
+    public let name : String
+    public let successful : Bool
+    public let metaData : ServiceStatusResultMetaData?
 
     init(name: String, successful: Bool, metaData: ServiceStatusResultMetaData?) {
       self.name = name

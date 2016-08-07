@@ -1,4 +1,4 @@
-struct ServiceStatusResultMetaData {
-    let summary : String
-    let properties : [String : String]?
+public struct ServiceStatusResultMetaData {
+    public let summary : String
+    public let properties : [String : String]?
 }
