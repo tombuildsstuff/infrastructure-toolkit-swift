@@ -1,3 +1,3 @@
-enum ServiceStatusFailureResultType : ErrorProtocol {
+enum ServiceStatusFailureResultType : Error {
     case MonitorDoesNotExist, MultipleMonitorsFound
 }
