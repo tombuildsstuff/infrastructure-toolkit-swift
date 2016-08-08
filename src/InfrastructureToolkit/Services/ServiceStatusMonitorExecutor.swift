@@ -1,6 +1,6 @@
 import Foundation
 
-public class ServiceStatusMonitorExecutor {
+public class ServiceStatusMonitorExecutor : IServiceStatusMonitorExecutor {
 
     private let monitors : [ServiceStatusMonitor]
 
@@ -8,12 +8,11 @@ public class ServiceStatusMonitorExecutor {
         self.monitors = monitors
     }
 
-    public func execute(name: String, done: (ServiceStatusResult) -> ()) {
+    public func execute(name: String) -> ServiceStatusResult {
         guard let monitor = self.findMonitorWithName(name: name) else {
             let metaData = ServiceStatusResultMetaData(summary: "Could not locate monitor", properties: nil)
             let result = ServiceStatusResult(name: name, successful: false, metaData: metaData)
-            done(result)
-            return
+            return result
         }
 
         var result : ServiceStatusResult
@@ -25,7 +24,7 @@ public class ServiceStatusMonitorExecutor {
             result = ServiceStatusResult(name: name, successful: false, metaData: metaData)
         }
 
-        done(result)
+        return result
     }
 
     // Private methods
