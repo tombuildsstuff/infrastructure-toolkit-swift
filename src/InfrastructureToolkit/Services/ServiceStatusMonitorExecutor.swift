@@ -10,7 +10,7 @@ public class ServiceStatusMonitorExecutor : IServiceStatusMonitorExecutor {
 
     public func execute(name: String) -> ServiceStatusResult {
         guard let monitor = self.findMonitorWithName(name: name) else {
-            let metaData = ServiceStatusResultMetaData(summary: "Could not locate monitor", properties: nil)
+            let metaData = ServiceStatusResultMetaData("Could not locate monitor", nil)
             let result = ServiceStatusResult(name: name, successful: false, metaData: metaData)
             return result
         }
@@ -20,7 +20,7 @@ public class ServiceStatusMonitorExecutor : IServiceStatusMonitorExecutor {
             result = try monitor.checkIsHealthy()
         } catch {
             let properties : [String: String]? = nil
-            let metaData = ServiceStatusResultMetaData(summary: "An Exception Occurred", properties: properties)
+            let metaData = ServiceStatusResultMetaData("An Exception Occurred", properties)
             result = ServiceStatusResult(name: name, successful: false, metaData: metaData)
         }
 
