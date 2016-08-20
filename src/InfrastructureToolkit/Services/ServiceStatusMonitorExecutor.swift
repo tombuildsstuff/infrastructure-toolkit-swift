@@ -27,6 +27,11 @@ public class ServiceStatusMonitorExecutor : IServiceStatusMonitorExecutor {
         return result
     }
 
+    public func exists(name: String) -> Bool {
+      let monitor = self.findMonitorWithName(name: name)
+      return monitor != nil
+    }
+
     // Private methods
     private func findMonitorWithName(name: String) -> ServiceStatusMonitor? {
         let matchingMonitors = self.monitors.filter({ (monitor: ServiceStatusMonitor) in
