@@ -27,6 +27,13 @@ public class ServiceStatusMonitorExecutor : IServiceStatusMonitorExecutor {
         return result
     }
 
+    public func executeAll() -> [ServiceStatusResult] {
+      return self.monitors.map( {
+        (monitor : ServiceStatusMonitor) -> ServiceStatusResult in
+          return self.execute(name: monitor.name)
+      })
+    }
+
     public func exists(name: String) -> Bool {
       let monitor = self.findMonitorWithName(name: name)
       return monitor != nil
