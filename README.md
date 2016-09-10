@@ -25,13 +25,28 @@ Service Status Monitors implement the `ServiceStatusMonitor` protocol - as defin
 In this sample code below - we'll just return that things are successful - to highlight that it works.
 
 ```
-class ExampleServiceStatusMonitor : ServiceStatusMonitor {
-    let name: String = "Example"
+import Foundation
+import InfrastructureToolkit
 
-    func checkIsHealthy() throws -> ServiceStatusResult {
-        return ServiceStatusResult(name: self.name, successful: true, metaData: nil)
+@objc
+public class ExampleServiceStatusMonitor : NSObject, ServiceStatusMonitor {
+
+    public var name : String {
+        get { return "Example" }
     }
+
+    public func checkIsHealthy() throws -> ServiceStatusResult {
+        let summary = "oh hai"
+        var properties = [String: String]()
+        properties["foo"] = "bar"
+        properties["hello"] = "there"
+
+        let metaData = ServiceStatusResultMetaData(summary, properties)
+        return ServiceStatusResult(name: self.name, successful: true, metaData: metaData)
+    }
+
 }
+
 ```
 
 ## Executing a single Service Status Monitor
@@ -40,10 +55,15 @@ In code - we can then execute the single Service Status Monitor outlined above b
 ```
 let monitors = [ ExampleServiceStatusMonitor() ]
 let executor = ServiceStatusMonitorExecutor(monitors: monitors)
-executor.execute(name: "example", done: {
-    (result: ServiceStatusResult) in
-    print("\(result.name) - \(result.successful)")
-})
+
+if (!executor.exists(name: name)) {
+  print("\(name) was not found!")
+  return
+}
+
+let result = executor.execute(name: name)
+print("\(name) returned '\(result.successful)'")
+
 ```
 
 If you're using one of the Integrations outlined above - the `Name` field is used as part of the URL - making it accessible by the URL `/service-status/example`.
@@ -52,5 +72,7 @@ If you're using one of the Integrations outlined above - the `Name` field is use
 It's also possible to execute all of the Service Status Monitors - which you'd generally want to do at Deployment time.
 
 ```
-TODO: implement me
+let result = self.service.executeAll()
+let response = ServiceStatusMonitorsResponse(result)
+print(response.successful ? "All Monitors OK" : "One or more monitors had an issue")
 ```
