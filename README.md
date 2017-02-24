@@ -76,3 +76,9 @@ let result = self.service.executeAll()
 let response = ServiceStatusMonitorsResponse(result)
 print(response.successful ? "All Monitors OK" : "One or more monitors had an issue")
 ```
+
+## Retrieving the Application Version
+```
+let service = ApplicationService()
+print("Version is \(service.version())")
+```
